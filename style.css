@@ -1,0 +1,684 @@
+
+/* =========================================
+   CLOUDVAULT — DOOMSDAY ARCHIVE
+   A file shelter after the storm
+   ========================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --background: #101110;
+    --surface: rgba(27, 29, 26, 0.88);
+    --surface-light: rgba(40, 42, 37, 0.92);
+
+    --primary: #d97736;
+    --secondary: #e8b45b;
+    --danger: #c65b42;
+
+    --text: #e8e5dc;
+    --muted: #96968d;
+
+    --border: rgba(220, 211, 185, 0.13);
+    --glass: rgba(35, 37, 32, 0.72);
+}
+
+/* Reset */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    position: relative;
+    isolation: isolate;
+
+    min-height: 100vh;
+    overflow-x: hidden;
+
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+
+    background:
+        linear-gradient(
+            180deg,
+            #171916 0%,
+            #101110 45%,
+            #0b0c0b 100%
+        );
+}
+
+/* =========================================
+   MOVING STORM CLOUDS
+   ========================================= */
+
+body::before {
+    content: "";
+    position: fixed;
+
+    top: -35%;
+    left: -60%;
+    width: 220%;
+    height: 85%;
+
+    z-index: -2;
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            ellipse at 20% 55%,
+            rgba(95, 99, 91, 0.35) 0%,
+            transparent 42%
+        ),
+        radial-gradient(
+            ellipse at 45% 40%,
+            rgba(58, 62, 57, 0.55) 0%,
+            transparent 40%
+        ),
+        radial-gradient(
+            ellipse at 70% 55%,
+            rgba(104, 91, 75, 0.25) 0%,
+            transparent 38%
+        ),
+        radial-gradient(
+            ellipse at 90% 35%,
+            rgba(56, 60, 55, 0.45) 0%,
+            transparent 40%
+        );
+
+    filter: blur(35px);
+
+    animation: stormClouds 48s linear infinite alternate;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+
+    z-index: -1;
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(12, 13, 12, 0.08),
+            rgba(12, 13, 12, 0.55)
+        ),
+        radial-gradient(
+            ellipse at 50% 100%,
+            rgba(199, 102, 49, 0.08),
+            transparent 55%
+        );
+
+    animation: distantFog 18s ease-in-out infinite alternate;
+}
+
+@keyframes stormClouds {
+    0% {
+        transform: translateX(-5%) translateY(0);
+    }
+
+    50% {
+        transform: translateX(2%) translateY(4%);
+    }
+
+    100% {
+        transform: translateX(8%) translateY(-2%);
+    }
+}
+
+@keyframes distantFog {
+    from {
+        opacity: 0.65;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* =========================================
+   MAIN LAYOUT
+   ========================================= */
+
+.container {
+    position: relative;
+
+    max-width: 1150px;
+    margin: auto;
+    padding: 35px 24px;
+}
+
+/* =========================================
+   NAVIGATION
+   ========================================= */
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 75px;
+    padding-bottom: 20px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.logo-icon {
+    color: var(--primary);
+    margin-right: 8px;
+}
+
+.logo span:last-child {
+    color: var(--secondary);
+}
+
+/* Emergency status indicator */
+
+.status {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    padding: 10px 16px;
+
+    border: 1px solid rgba(232, 180, 91, 0.22);
+    border-radius: 5px;
+
+    background: rgba(40, 34, 25, 0.65);
+
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+
+    color: var(--secondary);
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+
+    background: var(--secondary);
+    border-radius: 50%;
+
+    box-shadow: 0 0 10px rgba(232, 180, 91, 0.45);
+
+    animation: warningPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes warningPulse {
+    0%, 100% {
+        opacity: 1;
+        box-shadow: 0 0 8px rgba(232, 180, 91, 0.35);
+    }
+
+    50% {
+        opacity: 0.45;
+        box-shadow: 0 0 18px rgba(232, 180, 91, 0.75);
+    }
+}
+
+/* =========================================
+   WELCOME SECTION
+   ========================================= */
+
+.welcome {
+    margin-bottom: 45px;
+
+    animation: fadeUp 0.8s ease both;
+}
+
+.eyebrow {
+    font-size: 11px;
+    letter-spacing: 3px;
+
+    color: var(--primary);
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: clamp(38px, 6vw, 65px);
+    line-height: 1.1;
+    letter-spacing: -2.5px;
+
+    margin-bottom: 20px;
+}
+
+.gradient-text {
+    color: var(--secondary);
+    background: none;
+    -webkit-text-fill-color: initial;
+    animation: none;
+}
+
+.welcome p {
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 520px;
+}
+
+/* =========================================
+   STATISTICS
+   ========================================= */
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 18px;
+    margin-bottom: 35px;
+}
+
+.stat-card {
+    padding: 25px;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        background 0.25s ease;
+
+    animation: fadeUp 0.8s ease both;
+}
+
+.stat-card:nth-child(2) {
+    animation-delay: 0.12s;
+}
+
+.stat-card:nth-child(3) {
+    animation-delay: 0.24s;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+
+    border-color: rgba(217, 119, 54, 0.45);
+    background: var(--surface-light);
+}
+
+.stat-icon {
+    font-size: 24px;
+    margin-bottom: 20px;
+
+    filter: grayscale(0.3);
+
+    transition: transform 0.25s ease;
+}
+
+.stat-card:hover .stat-icon {
+    transform: translateY(-3px) rotate(-4deg);
+}
+
+.stat-label {
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+
+    color: var(--muted);
+    margin-bottom: 10px;
+}
+
+.stat-value {
+    font-size: 27px;
+    font-weight: 700;
+}
+
+/* =========================================
+   UPLOAD AREA
+   ========================================= */
+
+.upload-card {
+    position: relative;
+    overflow: hidden;
+
+    text-align: center;
+    padding: 55px 25px;
+
+    border: 1px dashed rgba(217, 119, 54, 0.42);
+    border-radius: 8px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(48, 38, 28, 0.38),
+            rgba(25, 27, 24, 0.75)
+        );
+
+    margin-bottom: 60px;
+
+    animation: fadeUp 0.9s ease both;
+
+    transition:
+        border-color 0.25s ease,
+        background 0.25s ease,
+        transform 0.25s ease;
+}
+
+/* A faint emergency-light sweep */
+
+.upload-card::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: -100%;
+
+    width: 60%;
+    height: 1px;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--secondary),
+        transparent
+    );
+
+    opacity: 0.55;
+
+    animation: lightSweep 8s ease-in-out infinite;
+}
+
+@keyframes lightSweep {
+    0%, 60% {
+        left: -100%;
+    }
+
+    100% {
+        left: 150%;
+    }
+}
+
+.upload-card:hover {
+    border-color: var(--secondary);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(60, 43, 29, 0.55),
+            rgba(29, 31, 27, 0.88)
+        );
+
+    transform: translateY(-2px);
+}
+
+/* JavaScript can add this class during drag-and-drop */
+
+.upload-card.drag-over {
+    border-color: var(--secondary);
+    background: rgba(232, 180, 91, 0.09);
+
+    transform: scale(1.01);
+
+    box-shadow:
+        0 0 0 4px rgba(232, 180, 91, 0.04),
+        0 0 30px rgba(217, 119, 54, 0.08);
+}
+
+.upload-icon {
+    font-size: 52px;
+    color: var(--primary);
+
+    margin-bottom: 20px;
+
+    animation: shelterFloat 5s ease-in-out infinite;
+}
+
+@keyframes shelterFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-7px);
+    }
+}
+
+.upload-card h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.upload-card p {
+    color: var(--muted);
+    margin-bottom: 30px;
+}
+
+/* File input */
+
+input[type="file"] {
+    color: var(--muted);
+    max-width: 100%;
+    margin-bottom: 20px;
+}
+
+/* =========================================
+   BUTTONS
+   ========================================= */
+
+button {
+    padding: 14px 25px;
+
+    color: #17130f;
+    font-weight: 700;
+    font-family: inherit;
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 5px;
+
+    background: linear-gradient(
+        135deg,
+        #e6a04a,
+        #c96b32
+    );
+
+    cursor: pointer;
+
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        filter 0.18s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+
+    box-shadow:
+        0 6px 18px rgba(201, 107, 50, 0.18);
+}
+
+button:active {
+    transform: scale(0.98);
+    box-shadow: none;
+}
+
+/* =========================================
+   FILE COLLECTION
+   ========================================= */
+
+.files-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 25px;
+}
+
+.files-heading h2 {
+    font-size: 24px;
+}
+
+.file-count {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.file-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.file-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+
+    padding: 20px 22px;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease;
+}
+
+.file-card:hover {
+    transform: translateX(3px);
+
+    border-color: rgba(217, 119, 54, 0.35);
+    background: var(--surface-light);
+}
+
+.file-name {
+    overflow-wrap: anywhere;
+    font-size: 14px;
+}
+
+.download-link {
+    color: var(--secondary);
+    text-decoration: none;
+
+    font-size: 13px;
+    white-space: nowrap;
+
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.download-link:hover {
+    color: #f2c77d;
+    transform: translateX(2px);
+}
+
+/* Empty state */
+
+.empty-state {
+    padding: 35px;
+
+    text-align: center;
+    color: var(--muted);
+    line-height: 2;
+
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+
+    background: rgba(255, 255, 255, 0.015);
+}
+
+/* =========================================
+   FOOTER
+   ========================================= */
+
+footer {
+    text-align: center;
+
+    margin-top: 70px;
+    padding: 30px;
+
+    color: #73756c;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+/* =========================================
+   ENTRANCE ANIMATION
+   ========================================= */
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================================
+   MOBILE RESPONSIVENESS
+   ========================================= */
+
+@media (max-width: 700px) {
+    .container {
+        padding: 25px 16px;
+    }
+
+    header {
+        margin-bottom: 50px;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    h1 {
+        letter-spacing: -1.5px;
+    }
+
+    .upload-card {
+        padding: 40px 15px;
+    }
+
+    .file-card {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .file-card:hover {
+        transform: none;
+    }
+}
+
+/* =========================================
+   ACCESSIBILITY
+   ========================================= */
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+    outline: 2px solid var(--secondary);
+    outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
+}

@@ -1,0 +1,288 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CloudVault — Doomsday Archive</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- Navigation -->
+        <header>
+
+            <div class="logo">
+                <span class="logo-icon">▰</span>
+                Cloud<span>Vault</span>
+            </div>
+
+            <div class="status">
+                <span class="status-dot"></span>
+                Archive Operational
+            </div>
+
+        </header>
+
+
+        <!-- Welcome section -->
+        <section class="welcome">
+
+            <div class="eyebrow">
+                SHELTER ARCHIVE / 01
+            </div>
+
+            <h1>
+                Keep your files<br>
+                <span class="gradient-text">
+                    out of the storm.
+                </span>
+            </h1>
+
+            <p>
+                A quiet place for your important files.
+                Upload them, keep them together, and
+                find them when you need them.
+            </p>
+
+        </section>
+
+
+        <!-- Overview cards -->
+        <section class="stats">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">▤</div>
+
+                <div class="stat-label">
+                    Archive Inventory
+                </div>
+
+                <div class="stat-value">
+                    {{ files|length }}
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">⌂</div>
+
+                <div class="stat-label">
+                    Storage Location
+                </div>
+
+                <div class="stat-value">
+                    Local
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">◉</div>
+
+                <div class="stat-label">
+                    System Status
+                </div>
+
+                <div class="stat-value">
+                    Ready
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Upload area -->
+        <section class="upload-card" id="uploadCard">
+
+            <div class="upload-icon">
+                ☁
+            </div>
+
+            <h2>
+                Store something safe
+            </h2>
+
+            <p id="uploadMessage">
+                Drop a file here or choose one from your device.
+            </p>
+
+            <form action="/upload"
+                  method="POST"
+                  enctype="multipart/form-data"
+                  id="uploadForm">
+
+                <input type="file"
+                       name="file"
+                       id="fileInput"
+                       required>
+
+                <br>
+
+                <button type="submit">
+                    Add to Archive
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- File collection -->
+        <section>
+
+            <div class="files-heading">
+
+                <h2>
+                    Archive Inventory
+                </h2>
+
+                <span class="file-count">
+                    {{ files|length }} items
+                </span>
+
+            </div>
+
+
+            <div class="file-list">
+
+                {% if files %}
+
+                    {% for file in files %}
+
+                        <div class="file-card">
+
+                            <div class="file-name">
+                                ▰ &nbsp; {{ file }}
+                            </div>
+
+                            <a class="download-link"
+                               href="{{ url_for(
+                                   'download_file',
+                                   filename=file
+                               ) }}">
+
+                                Retrieve file ↗
+
+                            </a>
+
+                        </div>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <div class="empty-state">
+
+                        <p>
+                            The archive is still empty.
+                        </p>
+
+                        <p>
+                            Add your first file to begin
+                            building your collection.
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </section>
+
+
+        <!-- Footer -->
+        <footer>
+
+            CLOUDVAULT · DOOMSDAY ARCHIVE
+            <br><br>
+
+            Built with Python · Flask · CSS
+
+        </footer>
+
+    </div>
+
+
+    <!-- Small upload interactions -->
+    <script>
+
+        const uploadCard = document.getElementById("uploadCard");
+        const fileInput = document.getElementById("fileInput");
+        const uploadMessage = document.getElementById("uploadMessage");
+
+        // Show the selected file name
+        fileInput.addEventListener("change", function () {
+
+            if (fileInput.files.length > 0) {
+
+                const selectedFile = fileInput.files[0];
+
+                uploadMessage.textContent =
+                    "Ready to archive: " + selectedFile.name;
+
+            } else {
+
+                uploadMessage.textContent =
+                    "Drop a file here or choose one from your device.";
+
+            }
+
+        });
+
+
+        // Highlight the upload area when dragging a file over it
+        uploadCard.addEventListener("dragover", function (event) {
+
+            event.preventDefault();
+            uploadCard.classList.add("drag-over");
+
+        });
+
+
+        // Remove the highlight when the file leaves the area
+        uploadCard.addEventListener("dragleave", function () {
+
+            uploadCard.classList.remove("drag-over");
+
+        });
+
+
+        // Put the dropped file into the file input
+        uploadCard.addEventListener("drop", function (event) {
+
+            event.preventDefault();
+            uploadCard.classList.remove("drag-over");
+
+            if (event.dataTransfer.files.length > 0) {
+
+                fileInput.files = event.dataTransfer.files;
+
+                const selectedFile = fileInput.files[0];
+
+                uploadMessage.textContent =
+                    "Ready to archive: " + selectedFile.name;
+
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>
