@@ -1,0 +1,222 @@
+]
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>CloudVault — Nebula</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- Navigation -->
+        <header>
+
+            <div class="logo">
+                <span class="logo-icon">✦</span>
+                Cloud<span>Vault</span>
+            </div>
+
+            <div class="status">
+                <span class="status-dot"></span>
+                System Online
+            </div>
+
+        </header>
+
+
+        <!-- Hero section -->
+        <section class="welcome">
+
+            <div class="eyebrow">
+                YOUR PERSONAL DIGITAL UNIVERSE
+            </div>
+
+            <h1>
+                Your files.<br>
+                <span class="gradient-text">
+                    Beyond boundaries.
+                </span>
+            </h1>
+
+            <p>
+                A secure space for your digital world.
+                Upload, manage, and access your files
+                from one beautiful dashboard.
+            </p>
+
+        </section>
+
+
+        <!-- Overview cards -->
+        <section class="stats">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">📁</div>
+
+                <div class="stat-label">
+                    Total Files
+                </div>
+
+                <div class="stat-value">
+                    {{ files|length }}
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">☁️</div>
+
+                <div class="stat-label">
+                    Storage Mode
+                </div>
+
+                <div class="stat-value">
+                    Local
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">⚡</div>
+
+                <div class="stat-label">
+                    Application
+                </div>
+
+                <div class="stat-value">
+                    Active
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Upload area -->
+        <section class="upload-card">
+
+            <div class="upload-icon">
+                ☁
+            </div>
+
+            <h2>
+                Drop into your universe
+            </h2>
+
+            <p>
+                Select a file from your device
+                to add it to CloudVault.
+            </p>
+
+            <form action="/upload"
+                  method="POST"
+                  enctype="multipart/form-data">
+
+                <input type="file"
+                       name="file"
+                       required>
+
+                <br>
+
+                <button type="submit">
+                    ✦ Upload to CloudVault
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- File collection -->
+        <section>
+
+            <div class="files-heading">
+
+                <h2>
+                    Your Collection
+                </h2>
+
+                <span class="file-count">
+                    {{ files|length }} items
+                </span>
+
+            </div>
+
+
+            <div class="file-list">
+
+                {% if files %}
+
+                    {% for file in files %}
+
+                        <div class="file-card">
+
+                            <div class="file-name">
+                                ◈ &nbsp; {{ file }}
+                            </div>
+
+                            <a class="download-link"
+                               href="{{ url_for(
+                                   'download_file',
+                                   filename=file
+                               ) }}">
+
+                                Download ↗
+
+                            </a>
+
+                        </div>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <div class="empty-state">
+
+                        <p>
+                            ✦ Your universe is waiting.
+                        </p>
+
+                        <p>
+                            Upload your first file to
+                            begin your collection.
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </section>
+
+
+        <!-- Footer -->
+        <footer>
+
+            CLOUDVAULT · NEBULA EDITION<br><br>
+
+            Built with Python · Flask · CSS
+
+        </footer>
+
+    </div>
+
+</body>
+
+</html>
